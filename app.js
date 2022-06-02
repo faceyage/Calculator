@@ -1,24 +1,37 @@
 let result = 0;
 let firstNum = "";
 const OPERATORS = ["add", "subtract", "multiply", "divide"];
-function main() {
-    const digits = document.querySelector(".digits").querySelectorAll("button");
-    digits.forEach(digit => digit.addEventListener("click", digit => {
-        firstNum += digit.target.dataset.number;        
-        displayCurrent(firstNum);
-        console.log(firstNum);
-    }));
+const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+let lastOperator = ["add", "+"];
 
-    const operators = document.querySelector(".operators").querySelectorAll("button");
-    operators.forEach(operator => operator.addEventListener("click", operator =>  {
-        result = operate(operator.target.id, result, +firstNum);
-        displayLast(`${firstNum} ${operator.target.textContent}`)
+function buttonFunctions(e) {
+    console.log("called")
+    
+    const id = e.target.id;
+    const text = e.target.textContent;
+    if (OPERATORS.includes(id)) { //the button is operator
+        result = operate(id, result, +firstNum);
+        displayCurrent(result);
+        displayLast(`${result} ${text}`);
         firstNum = "";
-    }));
+        //log last operator
+        lastOperator[0] = id;
+        lastOperator[1] = text;
+    }
+    else if(DIGITS.includes(id)) { //the button is digit
+        firstNum += id;
+        displayCurrent(firstNum);
+    }
+    else if(id === "clear") { //the button is clear
+        clear();
+    }
+    else if(id === "equal") {//the button is equal
+        displayLast(`${result} + ${firstNum} =`)
+        result = operate(lastOperator[0], result, +firstNum);
+        displayCurrent(result);
+        firstNum = "";
+    }
 
-    //clearBtn
-    const clearBtn = document.querySelector("#clear");
-    clearBtn.addEventListener("click", clear);
 }
 
 function clear() {
@@ -28,32 +41,16 @@ function clear() {
     result = 0;
 }
 
-function add(a, b) {
-    return a + b;
-}
-
-function subtract(a, b) {
-    return a - b;
-}
-
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    return a / b;
-}
-
 function operate(operator, a, b) {
     console.log(`Called: Operator: ${operator} a: ${a} b: ${b}`);
     if (operator === "add")
-        return add(a, b);
+        return a + b;
     else if(operator === "subtract")
-        return subtract(a, b);
+        return a - b;
     else if(operator === "multiply")
-        return multiply(a, b);
-    else if(operator === "divide")
-        return divide(a, b);
+        return a * b;
+    else if(operator === "divide") 
+        return a / b;
 }
 
 function displayCurrent(text) {
@@ -68,4 +65,23 @@ function displayLast(text) {
 }
 
 
-main();
+const buttons = document.querySelectorAll(".main button");
+buttons.forEach(button => button.addEventListener("click", buttonFunctions))
+
+
+
+// function add(a, b) {
+//     return a + b;
+// }
+
+// function subtract(a, b) {
+//     return a - b;
+// }
+
+// function multiply(a, b) {
+//     return a * b;
+// }
+
+// function divide(a, b) {
+//     return a / b;
+// }
