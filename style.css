@@ -1,0 +1,89 @@
+body {
+    display: flex;
+    justify-content: center;
+    background-color: #1E2022;
+}
+/* main */
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    background-color: #A9A9A9;
+    height: 400px;
+    width: 300px;
+    border: 5px solid black;
+    border-radius: 0.5rem;
+    padding: 20px;
+}
+/* screen */
+
+.screen {
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    width: auto;
+    background-color: gray;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    
+}
+
+.screen * {
+    flex: 1;
+    text-align: right;
+    font-size: 20px;
+}
+
+/* buttons */
+.buttons {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+
+/* digits */
+.digits {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.line{
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    flex: 1;
+}
+
+.line button {
+    flex: 1;
+}
+
+/* operators */
+
+.operators {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.operators btn {
+    text-align: right;
+
+}
+
+.btn {
+    width: 70px;
+    height: 40px;
+    border-radius: 0.5rem;
+    background-color: #181918;
+    color: white;
+}
+
+#clear {
+    background-color: #292b39;
+}
