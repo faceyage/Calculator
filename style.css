@@ -22,7 +22,6 @@ body {
     display: flex;
     flex-direction: column;
     height: 60px;
-    width: auto;
     background-color: gray;
     border: 1px solid black;
     border-radius: 0.5rem;
@@ -69,11 +68,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-.operators btn {
-    text-align: right;
-
 }
 
 .btn {
