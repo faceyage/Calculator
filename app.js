@@ -1,20 +1,25 @@
-let result = 0;
-let firstNum = "";
 const OPERATORS = ["add", "subtract", "multiply", "divide"];
 const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-let lastOperator = ["add", "+"];
+let lastOperator = [];
+let firstNum = "";
+let answer = "";
 
 function buttonFunctions(e) {
-    console.log("called")
-    
     const id = e.target.id;
     const text = e.target.textContent;
+    
     if (OPERATORS.includes(id)) { //the button is operator
-        result = operate(id, result, +firstNum);
-        displayCurrent(result);
-        displayLast(`${result} ${text}`);
+        if (firstNum === "" && answer === "") {
+            alert("you must enter number first");
+            return;  
+        }
+        if (answer === "")
+            answer = +firstNum;
+        else
+            answer = Math.round(operate(lastOperator[0], +answer, +firstNum) * 100) / 100;
+        displayLast(`${answer} ${text}`);
+        displayCurrent("");
         firstNum = "";
-        //log last operator
         lastOperator[0] = id;
         lastOperator[1] = text;
     }
@@ -22,23 +27,34 @@ function buttonFunctions(e) {
         firstNum += id;
         displayCurrent(firstNum);
     }
+    else if(id === "point") { //the button is . to add decimal
+        if (firstNum.includes(".")) {
+            alert("You can't add more than one point '.'");
+            return;
+        }
+        firstNum += text;
+        displayCurrent(firstNum);
+    }
     else if(id === "clear") { //the button is clear
         clear();
     }
     else if(id === "equal") {//the button is equal
-        displayLast(`${result} + ${firstNum} =`)
-        result = operate(lastOperator[0], result, +firstNum);
-        displayCurrent(result);
+        if (firstNum === "" || answer === "") {
+            alert("you must enter number first");
+            return;  
+        }
+        displayLast(`${answer} ${lastOperator[1]} ${firstNum} =`)
+        answer = Math.round(operate(lastOperator[0], +answer, +firstNum) * 100) / 100;
         firstNum = "";
+        displayCurrent(answer);
     }
-
 }
 
 function clear() {
     displayCurrent("0");
     displayLast("");
     firstNum = "";
-    result = 0;
+    answer = "";
 }
 
 function operate(operator, a, b) {
@@ -50,7 +66,13 @@ function operate(operator, a, b) {
     else if(operator === "multiply")
         return a * b;
     else if(operator === "divide") 
-        return a / b;
+    {
+        if (b === 0) {
+            alert("You can't divide by 0");
+            return a;
+        }
+        return a/b;
+    }
 }
 
 function displayCurrent(text) {
@@ -67,21 +89,3 @@ function displayLast(text) {
 
 const buttons = document.querySelectorAll(".main button");
 buttons.forEach(button => button.addEventListener("click", buttonFunctions))
-
-
-
-// function add(a, b) {
-//     return a + b;
-// }
-
-// function subtract(a, b) {
-//     return a - b;
-// }
-
-// function multiply(a, b) {
-//     return a * b;
-// }
-
-// function divide(a, b) {
-//     return a / b;
-// }
