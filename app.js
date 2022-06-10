@@ -15,8 +15,12 @@ function buttonFunctions(e) {
         }
         if (answer === "")
             answer = +firstNum;
-        else
-            answer = Math.round(operate(lastOperator[0], +answer, +firstNum) * 100) / 100;
+        else//problem here
+        {
+            if(firstNum !== "") {
+                answer = Math.round(operate(lastOperator[0], +answer, +firstNum) * 100) / 100;
+            }
+        }
         displayLast(`${answer} ${text}`);
         displayCurrent("");
         firstNum = "";
@@ -58,7 +62,7 @@ function clear() {
 }
 
 function operate(operator, a, b) {
-    console.log(`Called: Operator: ${operator} a: ${a} b: ${b}`);
+    console.log(`Called: Operator: ${operator} answer: ${a} firstNum: ${b}`);
     if (operator === "add")
         return a + b;
     else if(operator === "subtract")
