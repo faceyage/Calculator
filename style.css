@@ -38,16 +38,35 @@ body {
 .buttons {
     flex: 1;
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    flex-direction: column;
+    gap: 30px;
 }
 
+/* top buttons */
+.top-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+}
+
+.top-buttons > * {
+    flex: 1;
+}
+
+/* bottom buttons */
+.bottom-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
 
 /* digits */
 .digits {
     flex: 1;
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 .line{
@@ -64,20 +83,23 @@ body {
 /* operators */
 
 .operators {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 .btn {
-    width: 70px;
+    width: 65px;
     height: 40px;
     border-radius: 0.5rem;
     background-color: #181918;
     color: white;
 }
 
-#clear {
+#clear, #delete, #equal {
     background-color: #292b39;
+}
+
+.operators > *{
+    background-color: #25272a;
 }
