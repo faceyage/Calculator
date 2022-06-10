@@ -55,13 +55,19 @@ function buttonFunctions(e) {
         lastOperator[1] = ""
         displayCurrent(firstNum);
     }
+    else if(id === "delete") {//the button is equal
+        if (firstNum !== "") {
+            firstNum = firstNum.slice(0, firstNum.length - 1);
+            displayCurrent(firstNum);
+        }
+    }
 }
 
 function clear() {
-    displayCurrent("0");
-    displayLast("");
     firstNum = "";
     secondNum = "";
+    displayCurrent(firstNum);
+    displayLast("");
 }
 
 function operate(operator, a, b) {
