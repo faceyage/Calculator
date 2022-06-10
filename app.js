@@ -2,26 +2,26 @@ const OPERATORS = ["add", "subtract", "multiply", "divide"];
 const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 let lastOperator = [];
 let firstNum = "";
-let answer = "";
+let secondNum = "";
 
 function buttonFunctions(e) {
     const id = e.target.id;
     const text = e.target.textContent;
     
     if (OPERATORS.includes(id)) { //the button is operator
-        if (firstNum === "" && answer === "") {
+        if (firstNum === "" && secondNum === "") {
             alert("you must enter number first");
             return;  
         }
-        if (answer === "")
-            answer = +firstNum;
+        if (secondNum === "")
+            secondNum = +firstNum;
         else//problem here
         {
-            if(firstNum !== "") {
-                answer = Math.round(operate(lastOperator[0], +answer, +firstNum) * 100) / 100;
+            if(firstNum !== "" && lastOperator[0] !== "") {
+                secondNum = Math.round(operate(lastOperator[0], +secondNum, +firstNum) * 100) / 100;
             }
         }
-        displayLast(`${answer} ${text}`);
+        displayLast(`${secondNum} ${text}`);
         displayCurrent("");
         firstNum = "";
         lastOperator[0] = id;
@@ -43,14 +43,17 @@ function buttonFunctions(e) {
         clear();
     }
     else if(id === "equal") {//the button is equal
-        if (firstNum === "" || answer === "") {
+        if (firstNum === "" || secondNum === "") {
             alert("you must enter number first");
             return;  
         }
-        displayLast(`${answer} ${lastOperator[1]} ${firstNum} =`)
-        answer = Math.round(operate(lastOperator[0], +answer, +firstNum) * 100) / 100;
-        firstNum = "";
-        displayCurrent(answer);
+        displayLast(`${secondNum} ${lastOperator[1]} ${firstNum} =`)
+        secondNum = Math.round(operate(lastOperator[0], +secondNum, +firstNum) * 100) / 100;
+        firstNum = String(secondNum);
+        secondNum = "";
+        lastOperator[0] = ""
+        lastOperator[1] = ""
+        displayCurrent(firstNum);
     }
 }
 
@@ -58,11 +61,11 @@ function clear() {
     displayCurrent("0");
     displayLast("");
     firstNum = "";
-    answer = "";
+    secondNum = "";
 }
 
 function operate(operator, a, b) {
-    console.log(`Called: Operator: ${operator} answer: ${a} firstNum: ${b}`);
+    //console.log(`Called: Operator: ${operator} secondNum: ${a} firstNum: ${b}`);
     if (operator === "add")
         return a + b;
     else if(operator === "subtract")
@@ -80,16 +83,22 @@ function operate(operator, a, b) {
 }
 
 function displayCurrent(text) {
-    const answer = document.querySelector(".screen-current");
-    answer.textContent = text;
+    const secondNum = document.querySelector(".screen-current");
+    secondNum.textContent = text;
 }
 
 
 function displayLast(text) {
-    const answer = document.querySelector(".screen-last");
-    answer.textContent = text;
+    const secondNum = document.querySelector(".screen-last");
+    secondNum.textContent = text;
 }
-
 
 const buttons = document.querySelectorAll(".main button");
 buttons.forEach(button => button.addEventListener("click", buttonFunctions))
+
+document.addEventListener("keydown", e => {
+    if (e.key === "Backspace" && firstNum !== "") {
+        firstNum = firstNum.slice(0, firstNum.length - 1);
+        displayCurrent(firstNum);
+    }
+});
